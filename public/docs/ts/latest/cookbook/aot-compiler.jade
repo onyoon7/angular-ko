@@ -1,26 +1,43 @@
 include ../_util-fns
   
 :marked
+  이 해설서는 빌드 프로세스 중에 _전처리(AOT)_컴파일을 통해 성능을 크게 향상시키는 방법을 설명합니다.
+
   This cookbook describes how to radically improve performance by compiling _Ahead of Time_ (AOT) 
   during a build process.
 
 a#toc
 :marked
+  ## 목차
   ## Table of Contents
+  * [개요](#overview)
   * [Overview](#overview)
+  * [_전처리(Ahead-of-Time)_ vs _정시 처리(Just-in-Time)_](#aot-jit)
   * [_Ahead-of-Time_ vs _Just-in-Time_](#aot-jit)
+  * [전처리 컴파일](#compile)
   * [Compile with AOT](#compile)
+  * [실행](#bootstrap)
   * [Bootstrap](#bootstrap)
+  * [트리 ](#tree-shaking)
   * [Tree Shaking](#tree-shaking)
+  * [번들(bundle) 로드](#load)
   * [Load the bundle](#load)
+  * [앱 제공](#serve)
   * [Serve the app](#serve)
+  * [소스 코드](#source-code)
   * [Source Code](#source-code)
+  * [히어로 여행](#toh)
   * [Tour of Heroes](#toh)
 
 a#overview
 .l-main-section
 :marked
+  ## 개요
   ## Overview
+
+  Angular 애플리케이션은 주로 컴포넌트와 컴포넌트의 HTML 템플릿으로 구성되어 있습니다.
+  브라우저가 애플리케이션을 렌더링하기 전에,
+  _Angular 컴파일러_를 이용해 컴포넌트와 템플릿을 실행가능한 JavaScript로 변환해야 합니다.
 
   An Angular application consist largely of components and their HTML templates.
   Before the browser can render the application, 
